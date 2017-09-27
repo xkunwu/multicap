@@ -1,0 +1,185 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 057bef2..a416125 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -30,7 +30,7 @@ SET(DEPENDS_DIR "${MY_DIR}/depends" CACHE STRING "dependency directory must be s
+ OPTION(BUILD_SHARED_LIBS "Build shared (ON) or static (OFF) libraries" ON)
+ OPTION(BUILD_EXAMPLES "Build examples" ON)
+ OPTION(BUILD_OPENNI2_DRIVER "Build OpenNI2 driver" ON)
+-OPTION(ENABLE_CXX11 "Enable C++11 support" OFF)
++OPTION(ENABLE_CXX11 "Enable C++11 support" ON)
+ OPTION(ENABLE_OPENCL "Enable OpenCL support" ON)
+ OPTION(ENABLE_CUDA "Enable CUDA support" ON)
+ OPTION(ENABLE_OPENGL "Enable OpenGL support" ON)
+@@ -82,11 +82,11 @@ INCLUDE(SetupLibfreenect2Threading)
+ INCLUDE(GenerateResources)
+ 
+ #set the default path for built executables to the "bin" directory
+-SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
++#SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
+ 
+ #set the default path for built libraries to the "lib" directory
+-SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+-SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
++#SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
++#SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+ 
+ # dependencies
+ FIND_PACKAGE(PkgConfig)    # try find PKGConfig as it will be used if found
+diff --git a/examples/viewer.cpp b/examples/viewer.cpp
+index d6e80d8..5ca10c2 100644
+--- a/examples/viewer.cpp
++++ b/examples/viewer.cpp
+@@ -2,7 +2,7 @@
+ #include <cstdlib>
+ 
+ 
+-Viewer::Viewer() : shader_folder("src/shader/"), 
++Viewer::Viewer() : shader_folder("src/shader/"),
+                    win_width(600),
+                    win_height(400)
+ {
+@@ -49,14 +49,14 @@ void Viewer::initialize()
+ 
+     std::string vertexshadersrc = ""
+         "#version 330\n"
+-                                                
++
+         "in vec2 Position;"
+         "in vec2 TexCoord;"
+-                    
++
+         "out VertexData{"
+-        "vec2 TexCoord;" 
+-        "} VertexOut;"  
+-                    
++        "vec2 TexCoord;"
++        "} VertexOut;"
++
+         "void main(void)"
+         "{"
+         "    gl_Position = vec4(Position, 0.0, 1.0);"
+@@ -64,16 +64,16 @@ void Viewer::initialize()
+         "}";
+     std::string grayfragmentshader = ""
+         "#version 330\n"
+-        
++
+         "uniform sampler2DRect Data;"
+-        
++
+         "vec4 tempColor;"
+         "in VertexData{"
+         "    vec2 TexCoord;"
+         "} FragmentIn;"
+-        
++
+         "layout(location = 0) out vec4 Color;"
+-        
++
+         "void main(void)"
+         "{"
+             "ivec2 uv = ivec2(FragmentIn.TexCoord.x, FragmentIn.TexCoord.y);"
+@@ -82,15 +82,15 @@ void Viewer::initialize()
+         "}";
+     std::string fragmentshader = ""
+         "#version 330\n"
+-        
++
+         "uniform sampler2DRect Data;"
+-        
++
+         "in VertexData{"
+         "    vec2 TexCoord;"
+         "} FragmentIn;"
+-       
++
+         "layout(location = 0) out vec4 Color;"
+-        
++
+         "void main(void)"
+         "{"
+         "    ivec2 uv = ivec2(FragmentIn.TexCoord.x, FragmentIn.TexCoord.y);"
+@@ -128,6 +128,7 @@ void Viewer::winsize_callback(GLFWwindow* window, int w, int h)
+ 
+ void Viewer::key_callbackstatic(GLFWwindow* window, int key, int scancode, int action, int mods)
+ {
++    std::cout << "pressed " << key << "\n";
+     Viewer* viewer = reinterpret_cast<Viewer*>(glfwGetWindowUserPointer(window));
+     viewer->key_callback(window, key, scancode, action, mods);
+ }
+@@ -135,7 +136,15 @@ void Viewer::key_callbackstatic(GLFWwindow* window, int key, int scancode, int a
+ void Viewer::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+ {
+     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
++    {
++        std::cout << "esc pressed\n";
+         shouldStop = true;
++    }
++    else if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
++    {
++        std::cout << "space pressed\n";
++        shouldStop = 2;
++    }
+ }
+ 
+ void Viewer::onOpenGLBindingsChanged(OpenGLBindings *b)
+@@ -146,7 +155,7 @@ void Viewer::onOpenGLBindingsChanged(OpenGLBindings *b)
+     ir.gl(b);
+ }
+ 
+-bool Viewer::render()
++int Viewer::render()
+ {
+     // wipe the drawing surface clear
+     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+@@ -177,11 +186,11 @@ bool Viewer::render()
+         float h = static_cast<float>(frame->height);
+ 
+         Vertex bl = { -1.0f, -1.0f, 0.0f, 0.0f };
+-        Vertex br = { 1.0f, -1.0f, w, 0.0f }; 
++        Vertex br = { 1.0f, -1.0f, w, 0.0f };
+         Vertex tl = { -1.0f, 1.0f, 0.0f, h };
+         Vertex tr = { 1.0f, 1.0f, w, h };
+         Vertex vertices[] = {
+-            bl, tl, tr, 
++            bl, tl, tr,
+             tr, br, bl
+         };
+ 
+@@ -232,10 +241,11 @@ bool Viewer::render()
+ 
+     // put the stuff we've been drawing onto the display
+     glfwSwapBuffers(window);
+-    // update other events like input handling 
++    // update other events like input handling
+     glfwPollEvents();
+ 
+-    return shouldStop || glfwWindowShouldClose(window);
++    if (glfwWindowShouldClose(window)) return true;
++    return shouldStop;
+ }
+ 
+ void Viewer::addFrame(std::string id, libfreenect2::Frame* frame)
+diff --git a/examples/viewer.h b/examples/viewer.h
+index 970352a..9a93557 100644
+--- a/examples/viewer.h
++++ b/examples/viewer.h
+@@ -262,7 +262,7 @@ struct ShaderProgram : public WithOpenGLBindings
+ 
+ class Viewer : WithOpenGLBindings {
+ private:
+-    bool shouldStop;
++    int shouldStop;
+     GLFWwindow* window;
+     GLuint triangle_vbo, triangle_vao;
+     ShaderProgram renderShader;
+@@ -277,7 +277,7 @@ public:
+     Viewer();
+     void initialize();
+     virtual void onOpenGLBindingsChanged(OpenGLBindings *b);
+-    bool render();
++    int render();
+     void addFrame(std::string id,libfreenect2::Frame* frame);
+     void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+     void winsize_callback(GLFWwindow* window, int w, int h);

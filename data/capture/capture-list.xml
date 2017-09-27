@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<opencv_storage>
+<scaleFactor>5000.</scaleFactor>
+<rgbFileList>
+  /home/xwu/projects/multicap/build/stage/data/capture/camera_0_rgb_0.png
+  /home/xwu/projects/multicap/build/stage/data/capture/camera_0_rgb_1.png</rgbFileList>
+<depFileList>
+  /home/xwu/projects/multicap/build/stage/data/capture/camera_0_dep_0.png
+  /home/xwu/projects/multicap/build/stage/data/capture/camera_0_dep_1.png</depFileList>
+<regFileList>
+  /home/xwu/projects/multicap/build/stage/data/capture/camera_0_reg_0.png
+  /home/xwu/projects/multicap/build/stage/data/capture/camera_0_reg_1.png</regFileList>
+<disFileList>
+  /home/xwu/projects/multicap/build/stage/data/capture/camera_0_dis_0.png
+  /home/xwu/projects/multicap/build/stage/data/capture/camera_0_dis_1.png</disFileList>
+<bigFileList>
+  /home/xwu/projects/multicap/build/stage/data/capture/camera_0_big_0.png
+  /home/xwu/projects/multicap/build/stage/data/capture/camera_0_big_1.png</bigFileList>
+</opencv_storage>

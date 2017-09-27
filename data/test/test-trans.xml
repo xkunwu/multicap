@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<opencv_storage>
+    <board_width>7</board_width>
+    <board_height>5</board_height>
+    <square_length>50.</square_length>
+    <display_corners>1</display_corners>
+    <scaleFactor>5000.</scaleFactor>
+    <cammatColor0 type_id="opencv-matrix">
+        <rows>3</rows>
+        <cols>3</cols>
+        <dt>f</dt>
+        <data>
+            1.08137207e+03 0. 9.59500000e+02 0. 1.08137207e+03 5.39500000e+02 0.
+            0. 1.</data></cammatColor0>
+            <cammatDepth0 type_id="opencv-matrix">
+                <rows>3</rows>
+                <cols>3</cols>
+                <dt>f</dt>
+                <data>
+                    3.65389801e+02 0. 2.57374115e+02 0. 3.65389801e+02 2.03933105e+02 0.
+                    0. 1.</data></cammatDepth0>
+                    <rgbFileList>
+                        "/home/xwu/projects/multicap/data/calib-horia/first/camera0_rgb_rgb0.jpg"
+                        "/home/xwu/projects/multicap/data/calib-horia/first/camera1_rgb_rgb0.jpg"
+                        "/home/xwu/projects/multicap/data/calib-horia/first/camera0_rgb_rgb2.jpg"
+                        "/home/xwu/projects/multicap/data/calib-horia/first/camera1_rgb_rgb2.jpg"
+                        "/home/xwu/projects/multicap/data/calib-horia/first/camera0_rgb_rgb3.jpg"
+                        "/home/xwu/projects/multicap/data/calib-horia/first/camera1_rgb_rgb3.jpg"
+                        "/home/xwu/projects/multicap/data/calib-horia/first/camera0_rgb_rgb4.jpg"
+                        "/home/xwu/projects/multicap/data/calib-horia/first/camera1_rgb_rgb4.jpg"
+                    </rgbFileList>
+                    <depFileList>
+                        "/home/xwu/projects/multicap/data/calib-horia/first/camera0_depth_depth0.jpg"
+                        "/home/xwu/projects/multicap/data/calib-horia/first/camera1_depth_depth0.jpg"
+                        "/home/xwu/projects/multicap/data/calib-horia/first/camera0_depth_depth2.jpg"
+                        "/home/xwu/projects/multicap/data/calib-horia/first/camera1_depth_depth2.jpg"
+                        "/home/xwu/projects/multicap/data/calib-horia/first/camera0_depth_depth3.jpg"
+                        "/home/xwu/projects/multicap/data/calib-horia/first/camera1_depth_depth3.jpg"
+                        "/home/xwu/projects/multicap/data/calib-horia/first/camera0_depth_depth4.jpg"
+                        "/home/xwu/projects/multicap/data/calib-horia/first/camera1_depth_depth4.jpg"
+                    </depFileList>
+                </opencv_storage>
